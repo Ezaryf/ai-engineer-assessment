@@ -30,7 +30,6 @@ Design a secure, scalable knowledge-base pipeline capable of:
 2) Cleaning and normalizing text
 3) Summarizing content in English and Malay
 4) Generating vector embeddings for semantic search
-5) Powering an API or chatbot interface for enterprise use
 
 ## 📘 Question 3: Multilingual Summarisation Workflow (English + Malay)
 

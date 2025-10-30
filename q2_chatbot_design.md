@@ -68,3 +68,29 @@ PDFs, DOCX, HTML pages, Markdown, email archives, databases, FAQs.
 - ANN + small top_k + cross-encoder reranker balances speed and quality.
 - Cache results for frequent queries; precompute popular query embeddings.
 - Batch embedding computations.
+
+
+## 3) Ensure Fast and Accurate Answers
+
+### Answering Strategy (RAG Pattern)
+1. Retrieve top K chunks with metadata (vector DB + optional BM25).
+2. Rerank candidates with cross-encoder.
+3. Assemble context: concatenate best chunks up to token budget; include citations (doc title + link + location).
+4. Generate answer: feed context + user query into LLM with prompt template:
+   - "Answer **only** from context"
+   - Cite sources
+   - Say “I don’t know” when answer is absent
+
+### Post-Processing
+- Extract & format citations.
+- Apply safety or policy filters.
+- Optionally perform factual consistency checks.
+
+### Mitigate Hallucinations
+- Constrain generator prompt: “Only use the documents provided in CONTEXT. If answer is not in context, respond: ‘I don’t know’.”
+- Verifiability checks: secondary QA with extractive QA model.
+- Confidence score: derived from retrieval + model certainty.
+
+### UX: Citations & Traceability
+- Return short answer + cited documents/chunk locations with links & confidence.
+- “Show source” or “show full context” options.

@@ -83,3 +83,35 @@ We cover:
 - **Open-source seq2seq:** mT5, mBART-50, BART.
 - **Instruction-tuned LLMs:** GPT-family, Claude, Llama.
 - **Small & Fast:** DistilBART or distilled seq2seq for on-device low-latency needs.
+
+
+## 4) Ensuring Fidelity, Accuracy & Evaluation
+
+**Factuality & Hallucination Checks**
+Use automated verification based on:
+1. Extractive QA
+2. NLI/entailment models
+3. **Entity consistency:**
+   - Names
+   - Dates
+   - Numbers
+   - Product codes
+
+**Quality Metrics**
+1. **Automatic:**
+   - ROUGE-L (overlap with reference)
+   - BERTScore (semantic similarity)
+   - QAGS/FEQA (factual consistency)
+
+2. **Human evaluation:**
+   - Fluency (English + Malay)
+   - Coverage (does it include main points?)
+   - Conciseness
+   - Factuality
+   - Readability
+
+**Production Monitoring**
+- User feedback: “Helpful?” / “Report inaccurate summary.”
+- Drift detection (changes in language distribution or content).
+- Human spot checks on random samples.
+- Logging summaries + source chunks for auditing.

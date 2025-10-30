@@ -20,11 +20,26 @@ def validate_tool_call(payload: Dict[str, Any]) -> Tuple[Dict[str, Any], List[st
 
     clean["action"] = action
 
+    # 'q' validation
     if action == "search":
         q = payload.get("q")
         if not isinstance(q, str) or not q.strip():
             errors.append("Missing or empty 'q' for search action.")
             return {}, errors
         clean["q"] = q.strip()
+
+    # 'k' validation
+    k = payload.get("k", 3)
+    try:
+        k = int(k)
+    except (ValueError, TypeError):
+        errors.append("'k' must be a number. Defaulting to 3.")
+        k = 3
+
+    if not (1 <= k <= 5):
+        errors.append("'k' must be between 1 and 5. Defaulting to 3.")
+        k = 3
+
+    clean["k"] = k
 
     return clean, errors

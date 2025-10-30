@@ -61,3 +61,25 @@ We cover:
 **Handling Code-Switching**
 - Keep mixed chunks intact using multilingual model trained on code-switched data.
 - Alternatively: split by language, summarize each, then merge.
+
+
+## 3) Summarization Approach: Extractive vs Abstractive & Model Choice
+
+**Tradeoffs**
+
+| Approach | Pros| Cons|
+|-----------|-----------------------------|-------------------------------|
+| Extractive | Faithful, less hallucination, faster | Disjointed, less compression |
+| Abstractive | Fluent, can synthesize & compress | Risk of hallucination |
+
+**Practical Hybrid Pipeline**
+1. **Extractive Pruning:** Select relevant chunks (TF-IDF).
+2. **Chunk Summarization (Abstractive):** Run abstractive summarizer per chunk.
+3. **Hierarchical Summarization:** Merge chunk summaries into coherent document-level summary.
+4. **Factuality Check:** Run factuality check and fallback to extractive if flagged.
+
+**Model Choices**
+
+- **Open-source seq2seq:** mT5, mBART-50, BART.
+- **Instruction-tuned LLMs:** GPT-family, Claude, Llama.
+- **Small & Fast:** DistilBART or distilled seq2seq for on-device low-latency needs.

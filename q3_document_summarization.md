@@ -41,3 +41,23 @@ We cover:
 
 **Pre-summarization Cleaning**
 - Remove repeated disclaimers, legalese, or long lists that can be compressed.
+
+
+## 2) Multilingual & Code-Switching Handling
+
+**Options:**
+
+1. **Multilingual Model Approach (Preferred)**
+ - Single multilingual seq2seq model: mT5, mBART-50, instruction-tuned multilingual LLM.
+ - Tag input with language hints (`#lang:ms`, `#lang:en`, `#lang:mix`).
+
+2. **Translate-then-Summarize**
+ - Translate Malay → English (or vice versa), summarize, optionally translate back.
+ - Adds fidelity risk and latency.
+
+3. **Language-Aware Pipeline**
+ - Route chunks to language-specific summarizers, then merge outputs.
+
+**Handling Code-Switching**
+- Keep mixed chunks intact using multilingual model trained on code-switched data.
+- Alternatively: split by language, summarize each, then merge.

@@ -44,3 +44,27 @@ PDFs, DOCX, HTML pages, Markdown, email archives, databases, FAQs.
 
 #### Quality & Deduplication
 - Semantic deduplication to remove redundant chunks.
+
+
+## 2) Store and Retrieve Efficiently
+
+### Data Stores
+- **Vector DB:** embeddings and similarity search.
+- **Metadata store:** RDBMS or document DB for canonical docs, audit trail, and filters.
+- **Cache:** Redis for hot queries & answer caching.
+
+### Vector DB Considerations
+- Scale & feature requirements: on-prem vs managed (FAISS, Pinecone).
+- Support approximate nearest neighbor (ANN), persistence, replication, and metadata filtering.
+- Version embeddings to handle model updates.
+
+### Retrieval Approach
+- Hybrid scoring: semantic similarity + lexical matching (BM25) for factual accuracy.
+- Metadata filters: date range, product ID, language, doc type.
+- **Reranker:** After top N ANN retrieval (e.g., 50), use cross-encoder reranker to select top K.
+- **Chunk aggregation:** Merge retrieved chunks from same document region for coherent context.
+
+### Performance
+- ANN + small top_k + cross-encoder reranker balances speed and quality.
+- Cache results for frequent queries; precompute popular query embeddings.
+- Batch embedding computations.

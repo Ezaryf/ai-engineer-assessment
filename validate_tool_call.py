@@ -20,4 +20,11 @@ def validate_tool_call(payload: Dict[str, Any]) -> Tuple[Dict[str, Any], List[st
 
     clean["action"] = action
 
+    if action == "search":
+        q = payload.get("q")
+        if not isinstance(q, str) or not q.strip():
+            errors.append("Missing or empty 'q' for search action.")
+            return {}, errors
+        clean["q"] = q.strip()
+
     return clean, errors
